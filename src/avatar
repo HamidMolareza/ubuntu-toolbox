@@ -1,0 +1,27 @@
+#!/bin/bash
+
+email="$1"
+if [ -z "$email" ]; then
+    # Prompt the user for their email address
+    read -rp "Enter your email address: " email
+fi
+
+# Generate an MD5 hash of the email address
+email_hash=$(echo -n $email | tr -d ' ' | tr 'A-Z' 'a-z' | md5sum | awk '{print $1}')
+
+# Define the Gravatar URL with the email hash
+gravatar_url="https://www.gravatar.com/avatar/$email_hash"
+
+# Check if the download was successful
+if [ $? -eq 0 ]; then
+    # Download the Gravatar image to a file
+    # curl -o gravatar.jpg $gravatar_url
+
+    # Show the image
+    # feh $gravatar_url
+
+    # Print the Image url
+    echo_info "$gravatar_url"
+else
+    echo_error "Failed to Get the Gravatar image."
+fi

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+current_date="$(date +%Y%m%d-%H%M%S)"
+filename="temp-$current_date.txt"
+
+nano "$filename"
+echo "$filename"

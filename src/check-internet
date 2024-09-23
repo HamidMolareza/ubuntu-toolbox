@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if ping -c 1 google.com &> /dev/null; then
+    print-message "Internet connection is available." "green"
+else
+    print-message "No internet connection." "red"
+fi

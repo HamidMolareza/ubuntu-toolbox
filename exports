@@ -1,0 +1,83 @@
+#!/bin/bash
+
+get_current_shell_file() {
+    case "$SHELL" in
+        */bash)
+            if [[ -f "$HOME/.bashrc" ]]; then
+                echo "$HOME/.bashrc"
+            elif [[ -f "$HOME/.bash_profile" ]]; then
+                echo "$HOME/.bash_profile"
+            fi
+            ;;
+        */zsh)
+            if [[ -f "$HOME/.zshrc" ]]; then
+                echo "$HOME/.zshrc"
+            fi
+            ;;
+        */ksh)
+            if [[ -f "$HOME/.kshrc" ]]; then
+                echo "$HOME/.kshrc"
+            fi
+            ;;
+        */fish)
+            if [[ -f "$HOME/.config/fish/config.fish" ]]; then
+                echo "$HOME/.config/fish/config.fish"
+            fi
+            ;;
+        *)
+            echo "Unsupported shell or configuration file not found"
+            ;;
+    esac
+}
+
+is_in_path() {
+  local path_to_check="$1"
+
+  # Check if the path is already in $PATH
+  if [[ ":$PATH:" != *":$path_to_check:"* ]]; then
+    return 1 # Is not exists
+  else
+    return 0 # Already exists
+  fi
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    # The script is executed directly. (not source with another script like shell)
+
+    # Reload shell configs
+    current_shell_file=$(get_current_shell_file)
+    $SHELL "$current_shell_file"
+
+    if [ -z "$MY_SCRIPTS_DIR" ]; then
+        current_script_dir="$(dirname "$(realpath "$0")")"
+        export MY_SCRIPTS_DIR="$current_script_dir"
+        printf "\n\n" >> "$current_shell_file"
+        echo "export MY_SCRIPTS_DIR=\"$current_script_dir\"" >> "$current_shell_file"
+    fi
+
+    if ! is_in_path "$MY_SCRIPTS_DIR/src"; then
+        printf "\n\n" >> "$current_shell_file"
+        export_file="$(realpath "$0")"
+        echo "source $export_file" >> "$current_shell_file"
+
+        chmod -R +x "$MY_SCRIPTS_DIR/src"
+    fi
+
+    # Reload shell
+    $SHELL "$current_shell_file"
+fi
+
+# Script folders
+export PATH=$PATH:$MY_SCRIPTS_DIR/src
+export PATH=$PATH:$MY_SCRIPTS_DIR/src/file
+export PATH=$PATH:$MY_SCRIPTS_DIR/src/dotnet
+export PATH=$PATH:$MY_SCRIPTS_DIR/src/bale
+export PATH=$PATH:$MY_SCRIPTS_DIR/src/docker
+export PATH=$PATH:$MY_SCRIPTS_DIR/src/git
+export PATH=$PATH:$MY_SCRIPTS_DIR/src/media
+export PATH=$PATH:$MY_SCRIPTS_DIR/src/proxy
+export PATH=$PATH:$MY_SCRIPTS_DIR/src/s3
+export PATH=$PATH:$MY_SCRIPTS_DIR/src/tor
+
+# Functions
+source "$MY_SCRIPTS_DIR/libs/colors.sh"

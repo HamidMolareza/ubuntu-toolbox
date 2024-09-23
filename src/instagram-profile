@@ -1,0 +1,29 @@
+#!/bin/bash
+
+username="$1"
+if [ -z "$username" ]; then
+    printf "Username: "
+    read -r username
+fi
+
+curl -x socks5://localhost:9909 'https://www.save-free.com/process' \
+--compressed \
+-X POST \
+-H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0' \
+-H 'Accept: text/html, */*; q=0.01' \
+-H 'Accept-Language: en-US,en;q=0.5' \
+-H 'Accept-Encoding: gzip, deflate, br' \
+-H 'Referer: https://www.save-free.com/' \
+-H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' \
+-H 'X-Valy-Cache: accpted' \
+-H 'X-Requested-With: XMLHttpRequest' \
+-H 'Origin: https://www.save-free.com' \
+-H 'DNT: 1' \
+-H 'Sec-GPC: 1' \
+-H 'Connection: keep-alive' \
+-H 'Cookie: HstCfa4752989=1712430489426; HstCla4752989=1712430489426; HstCmu4752989=1712430489426; HstPn4752989=1; HstPt4752989=1; HstCnv4752989=1; HstCns4752989=1; cf_clearance=7KJbCnJR8y4TI5toReCbZt2JY4Rwof_wVW540FYCzp0-1712430490-1.0.1.1-9hhmwCJ8.bRzT6BSQuXgmO4s6ZTOnHqADUa_0ErQAH_aZ2Yo65YzQFxcq8CO3qR0zjcJJWVY8LDMputivGJ9aw; cookielawinfo-checkbox-necessary=yes; cookielawinfo-checkbox-functional=no; cookielawinfo-checkbox-performance=no; cookielawinfo-checkbox-analytics=no; cookielawinfo-checkbox-advertisement=no; cookielawinfo-checkbox-others=no' \
+-H 'Sec-Fetch-Dest: empty' \
+-H 'Sec-Fetch-Mode: cors' \
+-H 'Sec-Fetch-Site: same-origin' \
+-H 'TE: trailers' \
+--data-raw "instagram_url=$username&type=profile&resource=save" | jq
