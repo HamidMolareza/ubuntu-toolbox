@@ -1,7 +1,12 @@
 #!/bin/bash
 
-current_date="$(date +%Y%m%d-%H%M%S)"
-filename="temp-$current_date.txt"
+name="$1"
+if [ -z "$name" ]; then
+    name="temp"
+fi
 
-nano "$filename"
+current_date="$(date +%Y%m%d-%H%M%S)"
+filename="$name-$current_date.txt"
+
+gnome-text-editor --new-window "$filename"
 echo "$filename"
