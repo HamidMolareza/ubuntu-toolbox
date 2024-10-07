@@ -18,6 +18,29 @@ OUTPUT="$OUTPUT_DIR/$output_file"
 # ----------------------------------------------------------------------
 # Functions
 
+copy_if_exists() {
+    # Check if the source path is provided
+    if [ -z "$1" ]; then
+        echo "Source path is required."
+        return 1
+    fi
+
+    # Check if the destination path is provided
+    if [ -z "$2" ]; then
+        echo "Destination path is required."
+        return 1
+    fi
+
+    # Check if the source file or directory exists
+    if [ -e "$1" ]; then
+        cp -r "$1" "$2"
+        echo "Copied '$1' to '$2'."
+    else
+        echo "Source '$1' does not exist."
+        return 1
+    fi
+}
+
 wait_to_press_enter() {
   local message="$1"
   if [ -n "$message" ]; then
@@ -168,6 +191,8 @@ backup_os_configs
 crontab -l >"$tmp_backup_dir/crontab_backup_$(date +%Y%m%d).txt"s
 
 cp -r $HOME/.local/share/nautilus "$tmp_backup_dir"
+
+copy_if_exists /home/home/.config/tabby/ "$tmp_backup_dir"
 
 open "$tmp_backup_dir"
 echo ""
