@@ -18,3 +18,11 @@ biggest-files --help
 
 update
 ```
+
+## nautilus
+
+For using `nautilus` scripts, copy the `nautilus/scripts` scripts to `$HOME/.local/share/nautilus/`.
+
+```bash
+cp -r ./nautilus/scripts/* /home/home/.local/share/nautilus/scripts/
+```
