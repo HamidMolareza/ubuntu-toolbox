@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Check if the argument is provided
+if [ -z "$1" ]; then
+    echo "Usage: $(basename "$0") <path>"
+    exit 1
+fi
+
+# Resolve the absolute path
+ABSOLUTE_PATH=$(realpath "$1")
+
+# Copy to clipboard (using xclip or xsel, choose the one installed)
+if command -v xclip &> /dev/null; then
+    echo -n "$ABSOLUTE_PATH" | xclip -selection clipboard
+elif command -v xsel &> /dev/null; then
+    echo -n "$ABSOLUTE_PATH" | xsel --clipboard --input
+else
+    echo "Error: xclip or xsel not found. Install one to use clipboard functionality."
+    exit 1
+fi
+
+echo "Absolute path copied to clipboard: $ABSOLUTE_PATH"
