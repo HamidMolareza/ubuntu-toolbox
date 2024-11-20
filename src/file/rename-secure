@@ -2,14 +2,19 @@
 
 # Check if a directory path is provided
 if [ -z "$1" ]; then
-  echo "Usage: $0 <directory-path>"
+  echo "Usage: $(basename "$0") <directory-path> <pattern-or-name>"
   exit 1
 fi
 
 DIR_PATH="$1"
 
+PATTERN="$2"
+if [ -z "$PATTERN" ]; then
+  PATTERN="*"
+fi
+
 # Find all files in the specified directory
-find "$DIR_PATH" -type f | while read FILE; do
+find "$DIR_PATH" -type f -name "$PATTERN" | while read FILE; do
   # Get the directory, file name, and extension
   DIR=$(dirname "$FILE")
   BASENAME=$(basename "$FILE")
