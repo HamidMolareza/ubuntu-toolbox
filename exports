@@ -79,6 +79,7 @@ export PATH=$PATH:$MY_SCRIPTS_DIR/src/proxy
 export PATH=$PATH:$MY_SCRIPTS_DIR/src/s3
 export PATH=$PATH:$MY_SCRIPTS_DIR/src/tor
 export PATH=$PATH:$MY_SCRIPTS_DIR/src/translate
+export PATH=$PATH:$MY_SCRIPTS_DIR/src/gh
 
 # Functions
 source "$MY_SCRIPTS_DIR/libs/colors.sh"
