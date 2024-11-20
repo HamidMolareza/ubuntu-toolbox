@@ -7,16 +7,24 @@ if ! command -v xclip &> /dev/null; then
     exit 1
 fi
 
-# Create a temporary file to store the paths
-tempfile=$(mktemp)
+# Initialize variable to store file paths
+file_paths=""
 
-# Loop through the selected files/folders and append their paths to the tempfile
-for uri in "$@"; do
-    echo "\"$uri\"" >> "$tempfile"
+# Loop through each provided filename
+for file in "$@"; do
+  # Find full path
+  full_path=$(realpath "$file" 2>/dev/null)
+
+  # Check if file exists and add to variable
+  if [ -e "$full_path" ]; then
+    file_paths+="$full_path"$'\n'
+  else
+    zenity --warning --text="Warning: File '$file' not found."
+  fi
 done
 
-# Copy the paths to the clipboard
-xclip -selection clipboard -i < "$tempfile"
+# Remove trailing newlines
+file_paths=$(echo "$file_paths" | sed '/^$/d')
 
-# Clean up the temporary file
-rm "$tempfile"
+# Copy to clipboard using xclip
+echo "$file_paths" | xclip -selection clipboard
