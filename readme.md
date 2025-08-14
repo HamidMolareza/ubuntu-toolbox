@@ -1,8 +1,8 @@
 # Ubuntu Toolbox
 
-## Important Notice
+## ✅ Important Notice
 
-Users are now encouraged to use `@HamidMolareza/dotfiles` instead for better configurations and tools.
+Users are now encouraged to use [@HamidMolareza/dotfiles](https://github.com/HamidMolareza/dotfiles) instead for better configurations and tools.
 
 ## Install
 
