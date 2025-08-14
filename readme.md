@@ -1,8 +1,17 @@
+# Ubuntu Toolbox
+
+## Important Notice
+
+Users are now encouraged to use `@HamidMolareza/dotfiles` instead for better configurations and tools.
+
+## Install
+
 1- Clone project
 
 2- Execute the [exports](./exports) file. (`chmod +x ./exports; ./exports`)
 
-3- Simply use the scripts inside the src folder.
+## Usage
+Simply use the scripts inside the `src` folder.
 
 For example:
 ```bash
